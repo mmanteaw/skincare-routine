@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Skincare Routine</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F9F3EC;
+    --warm-brown: #7B5C45;
+    --deep-brown: #3E2A1E;
+    --gold: #C9A96E;
+    --gold-light: #E8D5B0;
+    --night-card: #251816;
+    --azelaic-card: #2A1F2E;
+    --exfo-card: #1E2A22;
+    --text-muted: #9A7E6F;
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--deep-brown);
+    min-height: 100vh;
+    padding-bottom: calc(80px + var(--safe-area-bottom));
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    padding: 36px 24px 28px;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--deep-brown);
+  }
+
+  header h1 em { font-style: italic; color: var(--warm-brown); }
+
+  .subtitle {
+    margin-top: 10px;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 14px auto;
+  }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    display: flex;
+    background: white;
+    border-bottom: 1px solid var(--gold-light);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(62,42,30,0.07);
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 14px 6px;
+    border: none;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .tab-btn .tab-icon { font-size: 1.1rem; }
+
+  .tab-btn.active {
+    color: var(--deep-brown);
+  }
+
+  .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px 2px 0 0;
+  }
+
+  /* ── TAB PANELS ── */
+  .tab-panel { display: none; padding: 20px 16px; }
+  .tab-panel.active { display: block; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--warm-brown);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label .s-line { flex: 1; height: 1px; background: var(--gold-light); }
+
+  /* ── AM STEPS ── */
+  .am-steps-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .am-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    border: 1px solid var(--gold-light);
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 13px;
+    color: var(--deep-brown);
+    box-shadow: 0 1px 6px rgba(62,42,30,0.04);
+  }
+
+  .am-step-num {
+    background: var(--gold);
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .am-step-text { line-height: 1.4; }
+  .am-step-text small { display: block; font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── NIGHT CARDS (accordion) ── */
+  .night-cards { display: flex; flex-direction: column; gap: 10px; }
+
+  .night-card { border-radius: 16px; overflow: hidden; }
+
+  .night-card.tretinoin { background: var(--night-card); color: #F0E6DC; }
+  .night-card.azelaic   { background: var(--azelaic-card); color: #EEE0F0; }
+  .night-card.exfoliation { background: var(--exfo-card); color: #DCF0E2; }
+  .night-card.rest      { background: white; color: var(--deep-brown); border: 1px solid var(--gold-light); }
+
+  .night-header {
+    display: flex;
+    align-items: center;
+    padding: 16px 18px;
+    cursor: pointer;
+    user-select: none;
+    gap: 14px;
+  }
+
+  .night-num-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 36px;
+  }
+
+  .night-label-sm {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.55;
+  }
+
+  .night-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .night-info { flex: 1; }
+
+  .night-type-badge {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .tretinoin .night-type-badge   { background: rgba(201,169,110,0.2); color: var(--gold); }
+  .azelaic .night-type-badge     { background: rgba(200,160,220,0.2); color: #D4A8E8; }
+  .exfoliation .night-type-badge { background: rgba(138,158,140,0.25); color: #A8D4AC; }
+  .rest .night-type-badge        { background: var(--gold-light); color: var(--warm-brown); }
+
+  .night-preview {
+    font-size: 11.5px;
+    opacity: 0.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+  }
+
+  .night-chevron {
+    font-size: 12px;
+    opacity: 0.5;
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+
+  .night-card.open .night-chevron { transform: rotate(180deg); }
+
+  .night-body {
+    display: none;
+    padding: 0 18px 18px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .rest .night-body { border-top-color: var(--gold-light); }
+
+  .night-card.open .night-body { display: block; }
+
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    font-size: 13px;
+    line-height: 1.45;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .rest .step-row { border-bottom-color: var(--gold-light); }
+  .step-row:last-child { border-bottom: none; }
+
+  .step-n {
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.45;
+    min-width: 18px;
+    padding-top: 2px;
+  }
+
+  /* ── NOTES TAB ── */
+  .note-card {
+    background: white;
+    border: 1px solid var(--gold-light);
+    border-left: 3px solid var(--gold);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 8px rgba(62,42,30,0.04);
+  }
+
+  .note-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--warm-brown);
+    margin-bottom: 8px;
+  }
+
+  .note-card p, .note-card li {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .note-card ul { padding-left: 18px; }
+
+  /* ── TIMELINE ── */
+  .timeline { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+
+  .tl-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--deep-brown);
+    color: var(--gold-light);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 13px;
+  }
+
+  .tl-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .tl-text { line-height: 1.4; }
+  .tl-text strong { display: block; font-size: 11px; letter-spacing: 0.05em; opacity: 0.65; margin-bottom: 2px; }
+
+  /* ── LEGEND ── */
+  .legend { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  .legend-swatch {
+    width: 28px;
+    height: 14px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  /* ── BOTTOM NAV SPACER ── */
+  .bottom-spacer { height: 20px; }
+
+  footer {
+    text-align: center;
+    padding: 0 20px 16px;
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Personalized Skincare Protocol</div>
+  <h1>Your Weekly <em>Ritual</em></h1>
+  <div class="divider"></div>
+  <p class="subtitle">Combination Skin · Acne Scarring · PIH on Melanated Skin</p>
+</header>
+
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('am')">
+    <span class="tab-icon">☀️</span> Morning
+  </button>
+  <button class="tab-btn" onclick="switchTab('pm')">
+    <span class="tab-icon">🌙</span> Evening
+  </button>
+  <button class="tab-btn" onclick="switchTab('notes')">
+    <span class="tab-icon">📋</span> Notes
+  </button>
+</nav>
+
+<!-- ═══ AM TAB ═══ -->
+<div id="tab-am" class="tab-panel active">
+  <div class="section-label">
+    <span>Every Morning</span>
+    <span class="s-line"></span>
+  </div>
+
+  <div class="am-steps-list">
+    <div class="am-step">
+      <div class="am-step-num">1</div>
+      <div class="am-step-text">
+        Double Cleanse
+        <small>Klairs Oil → CeraVe Foaming Cleanser</small>
+      </div>
+    </div>
+    <div class="am-step">
+      <div class="am-step-num">2</div>
+      <div class="am-step-text">
+        The Ordinary Alpha Arbutin 2% + HA
+        <small>Apply to damp skin for brightening</small>
+      </div>
+    </div>
+    <div class="am-step">
+      <div class="am-step-num">3</div>
+      <div class="am-step-text">
+        COSRX Snail 96 Mucin Essence
+        <small>Pat gently onto skin</small>
+      </div>
+    </div>
+    <div class="am-step">
+      <div class="am-step-num">4</div>
+      <div class="am-step-text">
+        Topicals Faded Serum
+        <small>Apply evenly across PIH/scarring areas</small>
+      </div>
+    </div>
+    <div class="am-step">
+      <div class="am-step-num">5</div>
+      <div class="am-step-text">
+        LRP Toleriane Double Repair Matte
+        <small>Non-comedogenic moisturizer</small>
+      </div>
+    </div>
+    <div class="am-step">
+      <div class="am-step-num">6</div>
+      <div class="am-step-text">
+        ☀️ Black Girl Sunscreen SPF 30
+        <small>Non-negotiable — reapply every 2 hrs outdoors</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PM TAB ═══ -->
+<div id="tab-pm" class="tab-panel">
+  <div class="section-label">
+    <span>Nightly Rotation</span>
+    <span class="s-line"></span>
+  </div>
+
+  <div class="night-cards">
+
+    <!-- Night 1 -->
+    <div class="night-card tretinoin" onclick="toggleNight(this)">
+      <div class="night-header">
+        <div class="night-num-wrap">
+          <span class="night-label-sm">Night</span>
+          <span class="night-num">1</span>
+        </div>
+        <div class="night-info">
+          <div class="night-type-badge">Tretinoin</div>
+          <div class="night-preview">LRP Cleanser · Snail · Niacinamide…</div>
+        </div>
+        <span class="night-chevron">▼</span>
+      </div>
+      <div class="night-body">
+        <div class="step-row"><span class="step-n">01</span> LRP Toleriane Purifying Foaming Cleanser</div>
+        <div class="step-row"><span class="step-n">02</span> COSRX Snail 96 Mucin Essence</div>
+        <div class="step-row"><span class="step-n">03</span> Niacinamide 10% + Zinc — let absorb fully</div>
+        <div class="step-row"><span class="step-n">04</span> COSRX Centella Blemish Cream</div>
+        <div class="step-row"><span class="step-n">05</span> Tretinoin 0.025% — pea-size, dry skin only (buffer 20–30 min)</div>
+        <div class="step-row"><span class="step-n">06</span> Estée Lauder Advanced Night Repair</div>
+        <div class="step-row"><span class="step-n">07</span> Vaseline (thin layer — slug)</div>
+      </div>
+    </div>
+
+    <!-- Night 2 -->
+    <div class="night-card azelaic" onclick="toggleNight(this)">
+      <div class="night-header">
+        <div class="night-num-wrap">
+          <span class="night-label-sm">Night</span>
+          <span class="night-num">2</span>
+        </div>
+        <div class="night-info">
+          <div class="night-type-badge">Azelaic Acid</div>
+          <div class="night-preview">LRP Cleanser · Snail · Arbutin…</div>
+        </div>
+        <span class="night-chevron">▼</span>
+      </div>
+      <div class="night-body">
+        <div class="step-row"><span class="step-n">01</span> LRP Toleriane Purifying Foaming Cleanser</div>
+        <div class="step-row"><span class="step-n">02</span> COSRX Snail 96 Mucin Essence</div>
+        <div class="step-row"><span class="step-n">03</span> Alpha Arbutin 2% + HA</div>
+        <div class="step-row"><span class="step-n">04</span> Topicals Faded Serum</div>
+        <div class="step-row"><span class="step-n">05</span> Azelaic Acid Gel 15%</div>
+        <div class="step-row"><span class="step-n">06</span> Effaclar Duo — active spots only</div>
+        <div class="step-row"><span class="step-n">07</span> Sephora Nourishing Moisturizer</div>
+      </div>
+    </div>
+
+    <!-- Night 3 -->
+    <div class="night-card tretinoin" onclick="toggleNight(this)">
+      <div class="night-header">
+        <div class="night-num-wrap">
+          <span class="night-label-sm">Night</span>
+          <span class="night-num">3</span>
+        </div>
+        <div class="night-info">
+          <div class="night-type-badge">Tretinoin</div>
+          <div class="night-preview">LRP Cleanser · Snail · Niacinamide…</div>
+        </div>
+        <span class="night-chevron">▼</span>
+      </div>
+      <div class="night-body">
+        <div class="step-row"><span class="step-n">01</span> LRP Toleriane Purifying Foaming Cleanser</div>
+        <div class="step-row"><span class="step-n">02</span> COSRX Snail 96 Mucin Essence</div>
+        <div class="step-row"><span class="step-n">03</span> Niacinamide 10% + Zinc — let absorb fully</div>
+        <div class="step-row"><span class="step-n">04</span> COSRX Centella Blemish Cream</div>
+        <div class="step-row"><span class="step-n">05</span> Tretinoin 0.025% — pea-size, dry skin only (buffer 20–30 min)</div>
+        <div class="step-row"><span class="step-n">06</span> Estée Lauder Advanced Night Repair</div>
+        <div class="step-row"><span class="step-n">07</span> Vaseline (thin layer — slug)</div>
+      </div>
+    </div>
+
+    <!-- Night 4 -->
+    <div class="night-card azelaic" onclick="toggleNight(this)">
+      <div class="night-header">
+        <div class="night-num-wrap">
+          <span class="night-label-sm">Night</span>
+          <span class="night-num">4</span>
+        </div>
+        <div class="night-info">
+          <div class="night-type-badge">Azelaic Acid</div>
+          <div class="night-preview">LRP Cleanser · Snail · Arbutin…</div>
+        </div>
+        <span class="night-chevron">▼</span>
+      </div>
+      <div class="night-body">
+        <div class="step-row"><span class="step-n">01</span> LRP Toleriane Purifying Foaming Cleanser</div>
+        <div class="step-row"><span class="step-n">02</span> COSRX Snail 96 Mucin Essence</div>
+        <div class="step-row"><span class="step-n">03</span> Alpha Arbutin 2% + HA</div>
+        <div class="step-row"><span class="step-n">04</span> Topicals Faded Serum</div>
+        <div class="step-row"><span class="step-n">05</span> Azelaic Acid Gel 15%</div>
+        <div class="step-row"><span class="step-n">06</span> Effaclar Duo — active spots only</div>
+        <div class="step-row"><span class="step-n">07</span> Sephora Nourishing Moisturizer</div>
+      </div>
+    </div>
+
+    <!-- Night 5 -->
+    <div class="night-card tretinoin" onclick="toggleNight(this)">
+      <div class="night-header">
+        <div class="night-num-wrap">
+          <span class="night-label-sm">Night</span>
+          <span class="night-num">5</span>
+        </div>
+        <div class="night-info">
+          <div class="night-type-badge">Tretinoin</div>
+          <div class="night-preview">LRP Cleanser · Snail · Niacinamide…</div>
+        </div>
+        <span class="night-chevron">▼</span>
+      </div>
+      <div class="night-body">
+        <div class="step-row"><span class="step-n">01</span> LRP Toleriane Purifying Foaming Cleanser</div>
+        <div class="step-row"><span class="step-n">02</span> COSRX Snail 96 Mucin Essence</div>
+        <div class="step-row"><span class="step-n">03</span> Niacinamide 10% + Zinc — let absorb fully</div>
+        <div class="step-row"><span class="step-n">04</span> COSRX Centella Blemish Cream</div>
+        <div class="step-row"><span class="step-n">05</span> Tretinoin 0.025% — pea-size, dry skin only (buffer 20–30 min)</div>
+        <div class="step-row"><span class="step-n">06</span> Estée Lauder Advanced Night Repair</div>
+        <div class="step-row"><span class="step-n">07</span> Vaseline (thin layer — slug)</div>
+      </div>
+    </div>
+
+    <!-- Night 6 -->
+    <div class="night-card exfoliation" onclick="toggleNight(this)">
+      <div class="night-header">
+        <div class="night-num-wrap">
+          <span class="night-label-sm">Night</span>
+          <span class="night-num">6</span>
+        </div>
+        <div class="night-info">
+          <div class="night-type-badge">Exfoliation</div>
+          <div class="night-preview">LRP Cleanser · AHA/BHA · Snail…</div>
+        </div>
+        <span class="night-chevron">▼</span>
+      </div>
+      <div class="night-body">
+        <div class="step-row"><span class="step-n">01</span> LRP Toleriane Purifying Foaming Cleanser</div>
+        <div class="step-row"><span class="step-n">02</span> AHA 30% + BHA 2% Peeling Solution — 10 min max, then rinse</div>
+        <div class="step-row"><span class="step-n">03</span> COSRX Snail 96 Mucin Essence</div>
+        <div class="step-row"><span class="step-n">04</span> COSRX Centella Blemish Cream</div>
+        <div class="step-row"><span class="step-n">05</span> Sephora Nourishing Moisturizer</div>
+        <div class="step-row"><span class="step-n">06</span> Vaseline (thin layer — slug)</div>
+      </div>
+    </div>
+
+    <!-- Night 7 -->
+    <div class="night-card rest" onclick="toggleNight(this)">
+      <div class="night-header">
+        <div class="night-num-wrap">
+          <span class="night-label-sm">Night</span>
+          <span class="night-num">7</span>
+        </div>
+        <div class="night-info">
+          <div class="night-type-badge">Rest & Repair</div>
+          <div class="night-preview">Double Cleanse · Snail · ANR…</div>
+        </div>
+        <span class="night-chevron">▼</span>
+      </div>
+      <div class="night-body">
+        <div class="step-row"><span class="step-n">01</span> Klairs Cleansing Oil → CeraVe Foaming Cleanser</div>
+        <div class="step-row"><span class="step-n">02</span> COSRX Snail 96 Mucin Essence</div>
+        <div class="step-row"><span class="step-n">03</span> Estée Lauder Advanced Night Repair</div>
+        <div class="step-row"><span class="step-n">04</span> Sephora Nourishing Moisturizer</div>
+        <div class="step-row"><span class="step-n">05</span> Vaseline (thin layer — slug)</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Legend -->
+  <div style="margin-top: 24px;">
+    <div class="section-label">
+      <span>Key</span>
+      <span class="s-line"></span>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch" style="background:#251816"></div> Tretinoin Nights — 1, 3, 5</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#2A1F2E"></div> Azelaic Acid Nights — 2, 4</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#1E2A22"></div> Exfoliation Night — 6</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#E8D5B0; border: 1px solid #C9A96E;"></div> Rest & Repair — 7</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NOTES TAB ═══ -->
+<div id="tab-notes" class="tab-panel">
+
+  <div class="section-label">
+    <span>What to Expect</span>
+    <span class="s-line"></span>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <span class="tl-icon">⚡</span>
+      <div class="tl-text">
+        <strong>Weeks 2–6</strong>
+        Possible tretinoin purge — temporary breakouts as cell turnover speeds up. Stay the course.
+      </div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-icon">✨</span>
+      <div class="tl-text">
+        <strong>Months 2–3</strong>
+        Noticeable improvement in brightness and skin texture.
+      </div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-icon">🌟</span>
+      <div class="tl-text">
+        <strong>Months 4–6</strong>
+        Significant PIH clearing with consistent SPF use daily.
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top: 24px;">
+    <span>Key Reminders</span>
+    <span class="s-line"></span>
+  </div>
+
+  <div class="note-card">
+    <h3>Tretinoin Tips</h3>
+    <p>Apply only to fully dry skin, 20–30 min after cleansing (buffering method). Start once per week and build up gradually. Use a pea-sized amount — more is not better.</p>
+  </div>
+
+  <div class="note-card">
+    <h3>Never Combine</h3>
+    <ul>
+      <li>Tretinoin + AHA/BHA</li>
+      <li>Tretinoin + Vitamin C</li>
+      <li>Tretinoin + Benzoyl Peroxide</li>
+      <li>Azelaic Acid + AHA/BHA same night</li>
+    </ul>
+  </div>
+
+  <div class="note-card">
+    <h3>SPF Is Everything</h3>
+    <p>Sun exposure worsens PIH significantly. Reapply every 2 hours outdoors. All actives in this routine increase sun sensitivity — skipping SPF negates your results.</p>
+  </div>
+
+  <div class="note-card">
+    <h3>PanOxyl Caution</h3>
+    <p>10% BP is high. Watch for dryness or new dark spots from irritation. If this occurs, reduce to once per week or switch to a 2.5–4% formula.</p>
+  </div>
+
+  <div class="bottom-spacer"></div>
+  <footer>
+    <p>Always patch test new products · Consult a dermatologist specializing in skin of color for prescription guidance</p>
+  </footer>
+</div>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleNight(card) {
+    card.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
