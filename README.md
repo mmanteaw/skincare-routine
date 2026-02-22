@@ -58,7 +58,7 @@ Open `index.html` in any browser. For the best experience, visit the live link o
 
 ## Live Site
 
-🔗 [View Skincare Calendar](#https://mmanteaw.github.io/skincare-routine/) ← 
+🔗 [View Skincare Calendar](https://mmanteaw.github.io/skincare-routine/) ← 
 
 ## Disclaimer
 
